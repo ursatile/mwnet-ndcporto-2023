@@ -1,0 +1,8 @@
+@page
+@model Rockaway.WebApp.Pages.ArtistsModel
+<h1>Artists</h1>
+<ol>
+	@foreach (var artist in Model.Artists) {
+		<li>@artist.Name</li>
+	}
+</ol>

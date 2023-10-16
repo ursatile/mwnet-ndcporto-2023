@@ -1,6 +1,8 @@
-using Rockaway.WebApp.Services;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
+using Rockaway.WebApp.Services;
+
+namespace Rockaway.WebApp.Tests.Status; 
 
 public class StatusTests {
 
@@ -27,7 +29,7 @@ public class StatusTests {
 	[Fact]
 	public async Task Status_Returns_Correct_Json() {
 		var factory = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
-				builder.ConfigureServices(
+			builder.ConfigureServices(
 				services => services.AddSingleton<IStatusReporter>(new FakeStatusReporter())
 			)
 		);
