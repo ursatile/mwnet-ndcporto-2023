@@ -1,12 +1,13 @@
-using Microsoft.EntityFrameworkCore;
-using Rockaway.WebApp.Data.Entities;
 namespace Rockaway.WebApp.Data;
 
+using System.Linq;
 using Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Sample;
 
-public class RockawayDbContext : DbContext {
+public class RockawayDbContext : IdentityDbContext<IdentityUser> {
 	// We must declare a constructor that takes a DbContextOptions<RockawayDbContext>
 	// if we want to use Asp.NET to configure our database connection and provider.
 	public RockawayDbContext(DbContextOptions<RockawayDbContext> options) : base(options) { }
@@ -19,7 +20,10 @@ public class RockawayDbContext : DbContext {
 
 		// Override EF Core's default table naming (which pluralizes entity names)
 		// and use the same names as the C# classes instead
-		foreach (var entity in modelBuilder.Model.GetEntityTypes()) {
+		var rockawayEntities = modelBuilder.Model.GetEntityTypes()
+			.Where(e => e.ClrType.Namespace == typeof(Artist).Namespace);
+
+		foreach (var entity in rockawayEntities) {
 			entity.SetTableName(entity.DisplayName());
 		}
 		modelBuilder.Entity<Artist>().HasIndex(artist => artist.Slug).IsUnique();
@@ -27,6 +31,6 @@ public class RockawayDbContext : DbContext {
 
 		modelBuilder.Entity<Artist>().HasData(SampleData.Artists.AllArtists);
 		modelBuilder.Entity<Venue>().HasData(SampleData.Venues.AllVenues);
-
+		modelBuilder.Entity<IdentityUser>().HasData(SampleData.Users.Admin);
 	}
 }

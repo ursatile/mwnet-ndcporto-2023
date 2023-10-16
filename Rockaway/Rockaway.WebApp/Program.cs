@@ -1,6 +1,7 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 using Rockaway.WebApp.Data;
 using Rockaway.WebApp.Hosting;
 using Rockaway.WebApp.Services;
@@ -26,6 +27,8 @@ if (builder.Environment.UseSqlite()) {
 	builder.Services.AddDbContext<RockawayDbContext>(options => options.UseSqlServer(connectionString));
 }
 
+builder.Services.AddDefaultIdentity<IdentityUser>()
+	.AddEntityFrameworkStores<RockawayDbContext>();
 var app = builder.Build();
 
 if (app.Environment.IsProduction()) {
