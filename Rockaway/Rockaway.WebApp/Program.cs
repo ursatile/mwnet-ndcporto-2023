@@ -1,5 +1,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 using Rockaway.WebApp.Data;
 using Rockaway.WebApp.Services;
 using Serilog;
@@ -9,6 +10,7 @@ Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 Log.Information("Serilog support enabled! Yeah!");
 builder.Host.UseSerilog();
 builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IStatusReporter>(new StatusReporter());
 
 var sqliteConnection = new SqliteConnection("Data Source=:memory:");
@@ -33,6 +35,9 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 app.MapRazorPages();
+app.MapControllerRoute(
+	name: "default",
+	pattern: "{controller}/{action=Index}/{id?}");
 app.MapGet("/status",
 	(IStatusReporter reporter) => reporter.GetStatus());
 
