@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 Log.Information("Serilog support enabled! Yeah!");
 builder.Host.UseSerilog();
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options => options.Conventions.AuthorizeAreaFolder("admin", "/"));
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IStatusReporter>(new StatusReporter());
 
@@ -53,6 +53,13 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 app.MapRazorPages();
+
+app.MapAreaControllerRoute(
+	name: "admin",
+	areaName: "Admin",
+	pattern: "Admin/{controller=Home}/{action=Index}/{id?}"
+).RequireAuthorization();
+
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller}/{action=Index}/{id?}");
@@ -63,4 +70,6 @@ app.MapGet("boom", () => {
 	var y = 0;
 	return x / y;
 });
+
+
 app.Run();
