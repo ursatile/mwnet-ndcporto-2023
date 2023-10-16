@@ -36,6 +36,11 @@ using (var scope = app.Services.CreateScope()) {
 	using (var db = scope.ServiceProvider.GetService<RockawayDbContext>()!) {
 		if (app.Environment.UseSqlite()) {
 			db.Database.EnsureCreated();
+		} else if (Boolean.TryParse(app.Configuration["apply-migrations"], out var applyMigrations) && applyMigrations) {
+			Log.Information("apply-migrations=true was specified. Applying EF migrations and then exiting.");
+			db.Database.Migrate();
+			Log.Information("EF database migrations applied successfully.");
+			Environment.Exit(0);
 		}
 	}
 }
