@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Rockaway.WebApp.Data.Entities;
 namespace Rockaway.WebApp.Data;
 
 using Microsoft.EntityFrameworkCore;
@@ -14,5 +16,9 @@ public class RockawayDbContext : DbContext {
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
 		base.OnModelCreating(modelBuilder);
 		modelBuilder.Entity<Artist>().HasData(SampleData.Artists.AllArtists);
+		modelBuilder.Entity<Venue>().HasData(SampleData.Venues.AllVenues);
+
 	}
+
+	public DbSet<Rockaway.WebApp.Data.Entities.Venue> Venue { get; set; } = default!;
 }
