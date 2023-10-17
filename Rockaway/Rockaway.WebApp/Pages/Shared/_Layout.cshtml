@@ -1,6 +1,9 @@
 @{
 	Layout = "_Base";
 }
+@section Head {
+	@await RenderSectionAsync("Head", required: false)
+}
 <header>
 	<h1>
 		<a asp-area="" asp-page="/Index">Rockaway</a>
