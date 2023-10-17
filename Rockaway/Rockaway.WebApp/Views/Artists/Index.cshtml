@@ -1,1 +1,12 @@
-<h1>Artists view - does this work?</h1>
+@model IEnumerable<Artist>
+<h1>
+	Artists
+</h1>
+@foreach (var artist in Model)
+{
+	<p>
+		<a asp-action="Details" asp-route-slug="@artist.Slug">
+			@artist.Name
+		</a>
+	</p>
+}

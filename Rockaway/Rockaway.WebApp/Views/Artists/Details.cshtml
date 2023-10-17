@@ -1,0 +1,9 @@
+@model Artist
+<h1>@Model.Name</h1>
+<p>@Model.Description</p>
+<hr />
+<ul>
+@foreach (var show in Model.HeadlineShows) {
+	<li>@show.Date @show.Venue.Name</li>
+}
+</ul>

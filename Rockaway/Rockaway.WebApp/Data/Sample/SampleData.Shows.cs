@@ -14,8 +14,17 @@ public partial class SampleData {
 		public static readonly Show show4 =
 			Venues.NewCrossInn.BookShow(Artists.DevLeppard, new(2023, 10, 20));
 
+		public static readonly Show show5 =
+			Venues.JohnDee.BookShow(Artists.DevLeppard, new(2023, 10, 22));
+
+		public static readonly Show show6 =
+			Venues.PubAnchor.BookShow(Artists.DevLeppard, new(2023, 10, 23));
+
+		public static readonly Show show7 =
+			Venues.Gagarin.BookShow(Artists.DevLeppard, new(2023, 10, 25));
+
 		public static IEnumerable<Show> AllShows = new[] {
-			show1, show2, show3, show4
+			show1, show2, show3, show4, show5, show6, show7
 		};
 
 		public static IEnumerable<object> SeedData
