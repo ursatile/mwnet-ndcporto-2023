@@ -117,9 +117,11 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 <hr />
 <section class="grid-examples">
 	<h1>Bootstrap Grid</h1>
-	@for (var i = 1; i <= 12; i++) {
+	@for (var i = 1; i <= 12; i++)
+	{
 		<div class="row">
-			@for (var col = 1; col <= i; col++) {
+			@for (var col = 1; col <= i; col++)
+			{
 				<div class="col">
 					<div>@col</div>
 				</div>
@@ -127,7 +129,8 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 		</div>
 	}
 	<h2>Offset Grids</h2>
-	@for (var o = 1; o < 12; o++) {
+	@for (var o = 1; o < 12; o++)
+	{
 		<div class="row">
 			<div class="col-@o"><div>.col-@o</div></div>
 			<div class="col-@(12 - o)"><div>.col-@(12 - o)</div></div>
@@ -339,7 +342,8 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 		<br />
 		@foreach (var genre in new[] {
 		"Djent", "Mathcore", "Power Metal", "Fusion", "Synthwave", "Pirate Metal"
-		}) {
+		})
+		{
 			<label for="fieldset-checkbox-@genre">
 				<input type="checkbox" name="fieldset-checkbox" id="fieldset-checkbox-@genre" value="@genre" /> @genre
 			</label>
