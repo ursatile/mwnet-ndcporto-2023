@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Rockaway.WebApp.Data.Entities;
 
-namespace Rockaway.WebApp.TagHelpers; 
+namespace Rockaway.WebApp.TagHelpers;
 
 public class CountryFlagTagHelper : TagHelper {
 

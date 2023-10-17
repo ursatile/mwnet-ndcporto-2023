@@ -32,7 +32,7 @@ public partial class SampleData {
 			Venues.PubAnchor.BookShow(Artists.DevLeppard, new(2023, 10, 23))
 				.WithTicketType("General Admission", 300)
 				.WithTicketType("VIP Meet & Greet", 720);
-			
+
 
 		public static readonly Show show7 =
 			Venues.Gagarin.BookShow(Artists.DevLeppard, new(2023, 10, 25))

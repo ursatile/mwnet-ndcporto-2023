@@ -1,6 +1,6 @@
+using System.Net.Sockets;
 using Microsoft.EntityFrameworkCore;
 using Rockaway.WebApp.Data.Entities;
-using System.Net.Sockets;
 
 namespace Rockaway.WebApp.Data.Sample;
 
