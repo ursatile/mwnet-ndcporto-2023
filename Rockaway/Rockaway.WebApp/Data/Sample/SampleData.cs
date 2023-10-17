@@ -1,3 +1,5 @@
+using System.Net.Sockets;
+
 namespace Rockaway.WebApp.Data.Sample;
 
 public partial class SampleData {

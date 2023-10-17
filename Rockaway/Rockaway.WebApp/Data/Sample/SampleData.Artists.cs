@@ -211,6 +211,9 @@ namespace Rockaway.WebApp.Data.Sample {
 				VirtualMachine, WebmasterOfPuppets, Xslte, Yamb, ZeroBasedIndex,
 				Ærbårn, Longname
 			};
+
+			public static IEnumerable<object> SeedData
+				=> AllArtists.Select(show => show.ToSeedData());
 		}
 	}
 }

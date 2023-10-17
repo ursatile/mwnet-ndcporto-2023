@@ -1,3 +1,5 @@
+using NodaTime;
+
 namespace Rockaway.WebApp.Data;
 
 using System.Linq;
@@ -14,6 +16,7 @@ public class RockawayDbContext : IdentityDbContext<IdentityUser> {
 
 	public DbSet<Artist> Artists { get; set; } = default!;
 	public DbSet<Venue> Venues { get; set; } = default!;
+	public DbSet<Show> Shows { get; set; } = default!;
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
 		base.OnModelCreating(modelBuilder);
@@ -26,11 +29,31 @@ public class RockawayDbContext : IdentityDbContext<IdentityUser> {
 		foreach (var entity in rockawayEntities) {
 			entity.SetTableName(entity.DisplayName());
 		}
-		modelBuilder.Entity<Artist>().HasIndex(artist => artist.Slug).IsUnique();
-		modelBuilder.Entity<Venue>().HasIndex(venue => venue.Slug).IsUnique();
 
-		modelBuilder.Entity<Artist>().HasData(SampleData.Artists.AllArtists);
-		modelBuilder.Entity<Venue>().HasData(SampleData.Venues.AllVenues);
+		modelBuilder.Entity<Artist>(entity => {
+			entity.HasMany(artist => artist.HeadlineShows).WithOne(show => show.HeadlineArtist);
+			entity.HasIndex(artist => artist.Slug).IsUnique();
+		});
+		modelBuilder.Entity<Venue>(entity => {
+			entity.HasMany(venue => venue.Shows).WithOne(show => show.Venue);
+			entity.HasIndex(venue => venue.Slug).IsUnique();
+		});
+
+		modelBuilder.Entity<Show>(entity => {
+			entity.Property(e => e.Date).HasConversion(
+				date => date.ToDateTimeUnspecified(),
+				dtu => LocalDate.FromDateTime(dtu));
+			entity.HasKey(
+				nameof(Show.Venue) + nameof(Show.Venue.Id),
+				nameof(Show.Date)
+			);
+		});
+
+		modelBuilder.Entity<Artist>().HasData(SampleData.Artists.SeedData);
+		modelBuilder.Entity<Venue>().HasData(SampleData.Venues.SeedData);
+		modelBuilder.Entity<Show>().HasData(SampleData.Shows.SeedData);
+
 		modelBuilder.Entity<IdentityUser>().HasData(SampleData.Users.Admin);
+
 	}
 }
