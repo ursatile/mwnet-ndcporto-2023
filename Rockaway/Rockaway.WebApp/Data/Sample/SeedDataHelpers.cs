@@ -16,14 +16,13 @@ public static class SeedDataHelpers {
 	//	ArtistId = slot.Artist.Id
 	//};
 
-	//public static object ToSeedData(this TicketType tt) => new {
-	//	tt.Id,
-	//	ShowVenueId = tt.Show.Venue.Id,
-	//	ShowDate = tt.Show.Date,
-	//	tt.Price,
-	//	tt.QuantityAvailable,
-	//	tt.Name
-	//};
+	public static object ToSeedData(this TicketType tt) => new {
+		tt.Id,
+		ShowVenueId = tt.Show.Venue.Id,
+		ShowDate = tt.Show.Date,
+		tt.Price,
+		tt.Name
+	};
 
 	public static object ToSeedData(this Venue venue) => new {
 		venue.Id,

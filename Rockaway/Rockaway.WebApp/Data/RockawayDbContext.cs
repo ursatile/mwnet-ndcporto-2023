@@ -39,19 +39,26 @@ public class RockawayDbContext : IdentityDbContext<IdentityUser> {
 			entity.HasIndex(venue => venue.Slug).IsUnique();
 		});
 
+		modelBuilder.Entity<TicketType>(entity => {
+			entity.Property(tt => tt.Price).HasColumnType("money");
+		});
+
 		modelBuilder.Entity<Show>(entity => {
 			entity.Property(e => e.Date).HasConversion(
 				date => date.ToDateTimeUnspecified(),
 				dtu => LocalDate.FromDateTime(dtu));
+
+			entity.HasMany(show => show.TicketTypes)
+				.WithOne(ticketType => ticketType.Show)
+				.OnDelete(DeleteBehavior.Cascade);
+
 			entity.HasKey(
 				nameof(Show.Venue) + nameof(Show.Venue.Id),
 				nameof(Show.Date)
 			);
 		});
 
-		modelBuilder.Entity<Artist>().HasData(SampleData.Artists.SeedData);
-		modelBuilder.Entity<Venue>().HasData(SampleData.Venues.SeedData);
-		modelBuilder.Entity<Show>().HasData(SampleData.Shows.SeedData);
+		SampleData.Populate(modelBuilder);
 
 		modelBuilder.Entity<IdentityUser>().HasData(SampleData.Users.Admin);
 
