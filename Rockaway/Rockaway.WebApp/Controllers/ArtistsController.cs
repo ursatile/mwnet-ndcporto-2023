@@ -20,6 +20,8 @@ namespace Rockaway.WebApp.Controllers {
 		public async Task<IActionResult> Details(string slug) {
 			var artist = await db.Artists
 				.Include(a => a.HeadlineShows)
+				.ThenInclude(show => show.TicketTypes)
+				.Include(a => a.HeadlineShows)
 				.ThenInclude(s => s.Venue)
 				.SingleOrDefaultAsync(a => a.Slug == slug);
 			if (artist == default) return NotFound();

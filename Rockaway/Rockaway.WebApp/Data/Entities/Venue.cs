@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using NodaTime;
 
@@ -8,14 +9,14 @@ public class Venue {
 
 	public Venue() { }
 
-	public Venue(Guid id, string name, string slug, string address, string city, string countryCode, string? postalCode, string? telephone,
+	public Venue(Guid id, string name, string slug, string address, string city, CultureInfo cultureInfo, string? postalCode, string? telephone,
 		string? websiteUrl) {
 		Id = id;
 		Name = name;
 		Slug = slug;
 		Address = address;
 		City = city;
-		CountryCode = countryCode;
+		CultureName = cultureInfo.Name;
 		PostalCode = postalCode;
 		Telephone = telephone;
 		WebsiteUrl = websiteUrl;
@@ -37,9 +38,10 @@ public class Venue {
 
 	public string City { get; set; } = String.Empty;
 
-	[Unicode(false)]
-	[MaxLength(2)]
-	public string CountryCode { get; set; } = String.Empty;
+	public string CultureName { get; set; } = String.Empty;
+
+	public string CountryCode
+		=> CultureName.Split("-").Last();
 
 	public string? PostalCode { get; set; }
 

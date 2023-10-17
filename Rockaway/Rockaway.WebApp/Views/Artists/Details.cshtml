@@ -1,14 +1,21 @@
+@using System.Globalization
+@using Rockaway.WebApp.TagHelpers
 @model Artist
 <h1>@Model.Name</h1>
 <p>@Model.Description</p>
 <hr />
-<ul>
 	@foreach (var show in Model.HeadlineShows.OrderBy(s => s.Date))
 	{
-		<li>
-			@show.Date
-			@show.Venue.Name
-			<country-flag venue="@show.Venue" />
-		</li>
+		<div class="row">
+			<div class="col">@show.Date</div>
+			<div class="col">
+				<country-flag venue="@show.Venue" />
+				@show.Venue.Name
+			</div>
+			<div class="col">
+				@foreach (var tt in show.TicketTypes) {
+					@tt.Name<text> </text>@tt.Price.ToString("C", new CultureInfo(show.Venue.CultureName))<br /> 
+				}</div>
+		</div>
+		<hr />
 	}
-</ul>
