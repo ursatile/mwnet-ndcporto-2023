@@ -13,8 +13,9 @@
 	</label>
 	<input type="checkbox" id="nav-checkbox" />
 	<nav>
-		<a asp-area="" asp-page="/Index">Home</a>
-		<a asp-area="" asp-page="/Privacy">Privacy</a>
+		<a asp-area="" asp-controller="Artists"
+		   asp-action="Index">Artists</a>
+		
 	</nav>
 </header>
 <main>
@@ -25,9 +26,10 @@
 		&copy; 2023 - Rockaway.WebApp
 	</span>
 	<nav>
-		<a asp-area="Admin" asp-page="Index">Admin</a>
-		<a asp-area="" asp-page="Elements">Elements</a>
-		<a asp-area="" asp-page="BootstrapCheatsheet">Bootstrap Cheat Sheet</a>
+		<a asp-area="" asp-page="/Privacy">Privacy</a>
+		<a asp-area="Admin" asp-page="/Index">Admin</a>
+		<a asp-area="" asp-page="/Elements">Elements</a>
+		<a asp-area="" asp-page="/BootstrapCheatsheet">Bootstrap Cheat Sheet</a>
 	</nav>
 </footer>
 @section Scripts {
